@@ -1,4 +1,7 @@
 .env
-researchenv
-research_paper_vector_db
-src/__pycache__
+nlpenv/
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.db
