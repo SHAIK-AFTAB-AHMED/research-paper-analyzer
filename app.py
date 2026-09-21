@@ -81,9 +81,6 @@ app.secret_key = flask_secret_key
 # SESSION COOKIE CONFIGURATION
 # ============================================================
 
-# Set COOKIE_SECURE=true on HTTPS deployment.
-# Keep false for local http://127.0.0.1:5000 testing.
-
 cookie_secure = (
     os.getenv("COOKIE_SECURE", "false").lower() == "true"
 )
@@ -245,17 +242,6 @@ embedder = HuggingFaceEmbeddings(
 # IN-MEMORY VECTOR DATABASE CACHE
 # ============================================================
 
-# Stores vector databases for currently active papers.
-#
-# Example:
-#
-# {
-#     1: FAISS object,
-#     2: FAISS object
-# }
-#
-# The key is the paper ID.
-
 vector_databases = {}
 
 
@@ -266,6 +252,9 @@ vector_databases = {}
 def get_current_user():
     """
     Return the currently logged-in user from the database.
+
+    If the session contains a user_id that no longer exists
+    in the database, clear the stale session and return None.
 
     Returns:
         sqlite3.Row or None
@@ -289,15 +278,33 @@ def get_current_user():
 
     connection.close()
 
+    # --------------------------------------------------------
+    # IMPORTANT:
+    # Handle stale sessions after Render restart/database reset.
+    # --------------------------------------------------------
+
+    if user is None:
+        session.clear()
+        return None
+
     return user
 
 
 def login_required():
     """
-    Check whether a user is logged in.
+    Check whether a valid logged-in user exists.
+
+    This checks both:
+    1. Whether user_id exists in the session.
+    2. Whether that user actually exists in the database.
+
+    Returns:
+        True or False
     """
 
-    return "user_id" in session
+    user = get_current_user()
+
+    return user is not None
 
 
 def get_current_paper():
@@ -335,10 +342,10 @@ def get_current_paper():
 @app.route("/")
 def index():
 
-    if not login_required():
-        return redirect(url_for("login"))
-
     user = get_current_user()
+
+    if user is None:
+        return redirect(url_for("login"))
 
     return render_template(
         "index.html",
@@ -1010,19 +1017,12 @@ def chat():
 
 if __name__ == "__main__":
 
-    # Deployment platforms provide PORT through
-    # an environment variable.
     port = int(
         os.getenv(
             "PORT",
             "5000"
         )
     )
-
-    # 0.0.0.0 allows the application to receive
-    # connections from outside the local computer.
-    #
-    # debug=False is important for deployment.
 
     app.run(
         debug=False,
