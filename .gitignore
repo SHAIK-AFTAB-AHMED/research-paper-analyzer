@@ -1,7 +1,50 @@
-.env
-nlpenv/
-venv/
-.venv/
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+deploytest/
+researchvenv/
+nlpenv/
+dwvenv/
+nlp_env/
+
+# Environment variables
+.env
+.env.*
+
+# Flask
+instance/
+*.log
+
+# SQLite databases
 *.db
+*.sqlite
+*.sqlite3
+
+# Uploaded research papers
+uploads/*
+!uploads/.gitkeep
+
+# FAISS / Vector database
+research_paper_vector_db/
+
+# IDE / Editors
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp

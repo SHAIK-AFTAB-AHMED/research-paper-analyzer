@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Previous Work - ResearchPortal</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 18px 50px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #1a237e,
+                    #283593
+                );
+
+            color: white;
+        }
+
+        .logo {
+            font-size: 1.7em;
+            font-weight: 700;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-right a {
+            color: white;
+            text-decoration: none;
+
+            padding: 8px 15px;
+
+            border-radius: 8px;
+
+            transition: 0.3s;
+        }
+
+        .nav-right a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .logout {
+            background: #ff6f61;
+        }
+
+        .container {
+            max-width: 1100px;
+
+            margin: 50px auto;
+
+            padding: 0 25px;
+        }
+
+        h1 {
+            color: #1a237e;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .paper-card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            margin-bottom: 18px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.08);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        .paper-info h3 {
+            color: #1a237e;
+            margin-bottom: 8px;
+        }
+
+        .paper-info p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .view-button {
+            background: #00bcd4;
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border-radius: 9px;
+
+            font-weight: 600;
+        }
+
+        .view-button:hover {
+            background: #0097a7;
+        }
+
+        .empty {
+            background: white;
+
+            padding: 50px;
+
+            text-align: center;
+
+            border-radius: 15px;
+
+            color: #777;
+        }
+
+        @media(max-width: 700px) {
+
+            nav {
+                padding: 15px 20px;
+            }
+
+            .paper-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+            ResearchPortal
+        </div>
+
+        <div class="nav-right">
+
+            <span>
+                Hi, {{ username }}
+            </span>
+
+            <a href="{{ url_for('index') }}">
+                Home
+            </a>
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+    <div class="container">
+
+        <h1>
+            Previous Work
+        </h1>
+
+        <p class="subtitle">
+            Your previously analyzed research papers
+        </p>
+
+        {% if papers %}
+
+            {% for paper in papers %}
+
+                <div class="paper-card">
+
+                    <div class="paper-info">
+
+                        <h3>
+                            {{ paper["filename"] }}
+                        </h3>
+
+                        <p>
+                            Uploaded:
+                            {{ paper["uploaded_at"] }}
+                        </p>
+
+                    </div>
+
+                    <a
+                        class="view-button"
+                        href="{{ url_for('view_history', paper_id=paper['id']) }}"
+                    >
+                        View Analysis
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+
+                <h2>
+                    No previous work yet
+                </h2>
+
+                <p>
+                    Upload your first research paper to start building your history.
+                </p>
+
+                <br>
+
+                <a
+                    class="view-button"
+                    href="{{ url_for('index') }}"
+                >
+                    Analyze a Paper
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

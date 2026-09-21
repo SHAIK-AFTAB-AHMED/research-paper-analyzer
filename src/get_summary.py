@@ -1,16 +1,20 @@
-
-
-
 def generate_detailed_summary(input_text, llm_model):
     """
-    Generate a detailed, well-explained summary of the input text using a Groq LLM.
-
+    Generate a detailed and structured summary of research-paper text
+    using the configured LLM.
     """
 
-    # Prompt for the LLM
+    if not input_text or not str(input_text).strip():
+        return "No content is available to summarize."
+
     prompt = f"""
 You are an expert research analyst and technical writer.
-Your task is to carefully read the following text and generate a comprehensive, structured summary that covers all key ideas, concepts, and insights. No preamble.
+
+Your task is to carefully read the following research-paper text and
+generate a comprehensive, structured summary covering the important
+ideas, concepts, findings, arguments, examples, and data.
+
+Do not provide a preamble.
 
 Instructions:
 
@@ -18,35 +22,57 @@ Instructions:
    - Main idea or theme of the text
    - Important subtopics or sections
    - Key findings, facts, or arguments
-   - Any examples or data mentioned
+   - Important examples or data mentioned
 
-2. Explain complex terms or concepts in a simple and intuitive way, as if teaching someone new to the topic.
+2. Explain complex terms or concepts in a simple and intuitive way,
+   as if teaching someone who is new to the topic.
 
-3. Ensure clarity and depth — avoid vague or generic summaries.
+3. Ensure clarity and depth.
+   Avoid vague or generic statements.
 
-4. Present the output in a clear format with headings, bullet points, and short paragraphs.
+4. Present the output using:
+   - Clear headings
+   - Bullet points
+   - Short paragraphs
 
-5. If the text is technical or academic, include a section: "Explanation in Simple Terms".
+5. If the text is technical or academic, include a section titled:
+
+   "Explanation in Simple Terms"
 
 Input Text:
+
 {input_text}
 
 Output Format:
-- Title or Theme
-- Summary (well-structured paragraphs)
-- Key Points (bullet format)
-- Explanation in Simple Terms (for layperson understanding)
-    """
 
-    # Invoke the Groq LLM model
-    response = llm_model.invoke(prompt)
+Title or Theme
 
-    # Safely extract the text response
-    if isinstance(response, str):
-        return response.strip()
-    elif hasattr(response, "content"):
-        return response.content.strip()
-    elif hasattr(response, "text"):
-        return response.text.strip()
-    else:
+Summary
+- Well-structured explanation
+
+Key Points
+- Important point
+- Important point
+- Important point
+
+Explanation in Simple Terms
+- Simple explanation of the concepts
+"""
+
+    try:
+        response = llm_model.invoke(prompt)
+
+        if isinstance(response, str):
+            return response.strip()
+
+        if hasattr(response, "content"):
+            return response.content.strip()
+
+        if hasattr(response, "text"):
+            return response.text.strip()
+
         return str(response).strip()
+
+    except Exception as error:
+        print("Error while generating summary:", error)
+        return "Unable to generate the summary at this time."

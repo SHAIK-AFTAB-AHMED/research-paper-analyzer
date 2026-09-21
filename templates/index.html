@@ -4,9 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Research Paper Analyzer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
         * {
             margin: 0;
@@ -27,7 +33,10 @@
             color: inherit;
         }
 
-        /* NAVBAR */
+        /* =========================
+           NAVBAR
+        ========================= */
+
         nav {
             display: flex;
             justify-content: space-between;
@@ -47,22 +56,28 @@
             letter-spacing: 1px;
         }
 
-        nav ul {
+        .nav-right {
             display: flex;
-            gap: 25px;
-            list-style: none;
+            align-items: center;
+            gap: 22px;
         }
 
-        nav ul li {
-            cursor: pointer;
+        .nav-link {
+            color: #fff;
+            font-size: 0.95em;
             transition: 0.3s;
         }
 
-        nav ul li:hover {
+        .nav-link:hover {
             color: #00bcd4;
         }
 
-        nav button {
+        .username {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .logout-btn {
             padding: 8px 18px;
             border: none;
             background: #ff6f61;
@@ -70,13 +85,18 @@
             border-radius: 8px;
             cursor: pointer;
             transition: 0.3s;
+            font-size: 0.9em;
         }
 
-        nav button:hover {
+        .logout-btn:hover {
             background: #ff8c70;
+            transform: translateY(-2px);
         }
 
-        /* HERO */
+        /* =========================
+           HERO
+        ========================= */
+
         .hero {
             position: relative;
             height: 90vh;
@@ -104,6 +124,7 @@
             position: relative;
             max-width: 900px;
             animation: fadeInUp 1.2s ease;
+            padding: 20px;
         }
 
         .hero h1 {
@@ -121,6 +142,7 @@
             padding: 15px 35px;
             font-size: 1.1em;
             border-radius: 10px;
+            border: none;
             background: #00bcd4;
             color: #fff;
             cursor: pointer;
@@ -145,7 +167,10 @@
             }
         }
 
-        /* SECTIONS */
+        /* =========================
+           GENERAL SECTIONS
+        ========================= */
+
         section {
             padding: 80px 50px;
             position: relative;
@@ -158,7 +183,21 @@
             color: #1a237e;
         }
 
-        /* FEATURES */
+        /* =========================
+           ABOUT
+        ========================= */
+
+        #about p {
+            max-width: 800px;
+            margin: 0 auto 15px auto;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           FEATURES
+        ========================= */
+
         .features-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -200,14 +239,29 @@
             color: #555;
         }
 
-        /* UPLOAD */
+        /* =========================
+           UPLOAD SECTION
+        ========================= */
+
         .upload-section {
-            background: linear-gradient(135deg, #0a198a, #0a1168);
+            background: url('/static/hero2.jpg') center/cover no-repeat;
             color: #ffffff;
             padding: 60px;
-            background: url('/static/hero2.jpg');
             text-align: center;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .upload-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(5, 12, 90, 0.78);
+            z-index: 0;
+        }
+
+        .upload-section>* {
+            position: relative;
+            z-index: 1;
         }
 
         .upload-section h2 {
@@ -233,16 +287,6 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .upload-card input[type="file"] {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-
         .upload-icon i {
             font-size: 3.5em;
             color: #00bcd4;
@@ -259,6 +303,10 @@
             line-height: 1.5;
         }
 
+        /* =========================
+           PROGRESS BAR
+        ========================= */
+
         .progress-container {
             width: 80%;
             margin: 30px auto 0 auto;
@@ -273,8 +321,77 @@
             height: 100%;
             background: #00bcd4;
             border-radius: 15px;
-            transition: width 0.5s;
+            transition: width 0.3s;
         }
+
+        /* =========================
+           STATUS MESSAGE
+        ========================= */
+
+        .status-message {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 12px 18px;
+            border-radius: 10px;
+            display: none;
+            font-size: 0.95em;
+        }
+
+        .status-success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.6);
+            color: #e8ffe9;
+        }
+
+        .status-error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.6);
+            color: #ffe8e8;
+        }
+
+        /* =========================
+           TOPIC SECTION
+        ========================= */
+
+        #topicSection {
+            margin-top: 30px;
+        }
+
+        #topicSection label {
+            color: #fff;
+            font-size: 1.1em;
+        }
+
+        #topicSelect {
+            font-size: 1em;
+            padding: 11px 15px;
+            border-radius: 10px;
+            border: none;
+            margin-left: 10px;
+            cursor: pointer;
+            min-width: 250px;
+        }
+
+        .summary-btn {
+            font-size: 1em;
+            padding: 11px 18px;
+            border-radius: 10px;
+            border: none;
+            margin-left: 10px;
+            cursor: pointer;
+            background: #00bcd4;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .summary-btn:hover {
+            background: #0097a7;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           SUMMARY
+        ========================= */
 
         .summary {
             text-align: left;
@@ -287,25 +404,49 @@
         }
 
         .summary h3 {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            color: #1a237e;
+            font-size: 1.6em;
+        }
+
+        #summaryContent {
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+        }
+
+        #summaryContent h2 {
+            text-align: left;
+            font-size: 1.6em;
+            margin: 20px 0 10px;
             color: #1a237e;
         }
 
-        #topicSection {
-            margin-top: 30px;
+        #summaryContent h3 {
+            font-size: 1.35em;
+            margin: 18px 0 8px;
+            color: #283593;
         }
 
-        #topicSection select,
-        #topicSection button {
-            font-size: 1em;
-            padding: 10px;
-            border-radius: 10px;
-            border: none;
-            margin-left: 10px;
-            cursor: pointer;
+        #summaryContent h4 {
+            font-size: 1.15em;
+            margin: 15px 0 6px;
+            color: #3949ab;
         }
 
-        /* CHAT */
+        #summaryContent ul,
+        #summaryContent ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        #summaryContent li {
+            margin-bottom: 6px;
+        }
+
+        /* =========================
+           CHAT
+        ========================= */
+
         #chatSection {
             margin-top: 30px;
             text-align: center;
@@ -314,6 +455,7 @@
         #chatSection h3 {
             color: #fff;
             margin-bottom: 15px;
+            font-size: 1.5em;
         }
 
         #chatBox {
@@ -331,13 +473,14 @@
         }
 
         .chat-message {
-            max-width: 70%;
+            max-width: 75%;
             padding: 10px 15px;
             border-radius: 15px;
             font-size: 0.95em;
-            line-height: 1.4;
+            line-height: 1.5;
             display: inline-block;
             word-wrap: break-word;
+            overflow-wrap: anywhere;
         }
 
         .chat-user {
@@ -354,24 +497,55 @@
             border-bottom-left-radius: 5px;
         }
 
+        .chat-loading {
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        .chat-input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
         #chatInput {
             width: 70%;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 10px;
             border: none;
-            margin-right: 10px;
+            outline: none;
+            font-size: 1em;
+        }
+
+        #chatInput:focus {
+            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.3);
         }
 
         #chatSection button {
-            padding: 10px 20px;
+            padding: 11px 20px;
             border-radius: 10px;
             border: none;
             background: #00bcd4;
             color: #fff;
             cursor: pointer;
+            transition: 0.3s;
         }
 
-        /* VISUALIZATION */
+        #chatSection button:hover {
+            background: #0097a7;
+        }
+
+        #chatSection button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* =========================
+           VISUALIZATION
+        ========================= */
+
         #charts-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -392,15 +566,10 @@
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
         }
 
-        /* ABOUT */
-        #about p {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            line-height: 1.8;
-        }
+        /* =========================
+           FOOTER
+        ========================= */
 
-        /* FOOTER */
         footer {
             background: linear-gradient(90deg, #1a237e, #283593);
             color: #fff;
@@ -412,18 +581,33 @@
             color: #ff6f61;
             margin: 0 10px;
             text-decoration: none;
-            font-size: 1.2em;
+            font-size: 1.05em;
         }
 
         footer a:hover {
             text-decoration: underline;
         }
 
-        /* RESPONSIVE */
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
         @media(max-width:768px) {
+
             nav {
                 flex-direction: column;
                 gap: 15px;
+                padding: 18px 20px;
+            }
+
+            .nav-right {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .hero {
+                height: 80vh;
             }
 
             .hero h1 {
@@ -437,242 +621,1254 @@
             section {
                 padding: 60px 20px;
             }
+
+            .upload-section {
+                padding: 50px 20px;
+            }
+
+            .upload-card {
+                padding: 40px 20px;
+            }
+
+            .progress-container {
+                width: 95%;
+            }
+
+            #topicSelect {
+                width: 100%;
+                margin: 15px 0 10px 0;
+            }
+
+            .summary-btn {
+                margin-left: 0;
+            }
+
+            .chat-input-container {
+                flex-direction: column;
+            }
+
+            #chatInput {
+                width: 100%;
+                margin-right: 0;
+            }
+
+            #chatSection button {
+                width: 100%;
+            }
+
+            .chat-message {
+                max-width: 90%;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- NAVBAR --><nav align = "center">
-    <div class="logo" >ResearchPortal</div>
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <nav>
+
+        <div class="logo">
+            ResearchPortal
+        </div>
+
+        <div class="nav-right">
+
+            <span class="username">
+                <i class="fa-solid fa-user"></i>
+                {{ session.get('username', 'User') }}
+            </span>
+
+            <a href="/history" class="nav-link">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                Previous Work
+            </a>
+
+            <a href="/logout">
+                <button class="logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </button>
+            </a>
+
+        </div>
+
     </nav>
 
-    <!-- HERO -->
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
     <section class="hero">
+
         <div class="hero-content">
-            <h1>Effortless Research Paper Analysis</h1>
-            <p>Upload, summarize, and explore insights from academic papers using AI-powered tools.</p>
-            <button onclick="document.getElementById('uploadSection').scrollIntoView({behavior:'smooth'})">Upload
-                Paper</button>
+
+            <h1>
+                Effortless Research Paper Analysis
+            </h1>
+
+            <p>
+                Upload, summarize, and explore insights from academic papers
+                using AI-powered tools.
+            </p>
+
+            <button onclick="scrollToUpload()">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                Upload Paper
+            </button>
+
         </div>
+
     </section>
 
-    <!-- ABOUT -->
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
     <section id="about">
-        <h2>About The Project</h2>
-        <p>This project leverages AI and NLP to analyze research papers, generate summaries, extract keywords, and
-            visualize trends.</p>
-        <p><strong>Tech Stack:</strong> Python, AI/ML, NLP, PDF Parsing, Chart.js, Modern Web Front-end (HTML/CSS/JS or
-            React)</p>
+
+        <h2>
+            About The Project
+        </h2>
+
+        <p>
+            This project leverages AI and NLP to analyze research papers,
+            generate summaries, extract important sections, and allow users
+            to ask questions about their uploaded research papers.
+        </p>
+
+        <p>
+            <strong>Tech Stack:</strong>
+            Python, Flask, AI/ML, NLP, PDF Parsing,
+            LangChain, FAISS, Hugging Face and Groq.
+        </p>
+
     </section>
 
-    
-    <!-- FEATURES -->
+
+    <!-- =========================
+         FEATURES
+    ========================== -->
+
     <section id="features">
-        <h2>Key Features</h2>
+
+        <h2>
+            Key Features
+        </h2>
+
         <div class="features-container">
-            <div class="feature-card"><i class="fa-solid fa-file-pdf"></i>
-                <h3>PDF Analysis</h3>
-                <p>Analyze PDFs instantly with AI tools.</p>
+
+            <div class="feature-card">
+
+                <i class="fa-solid fa-file-pdf"></i>
+
+                <h3>
+                    PDF Analysis
+                </h3>
+
+                <p>
+                    Upload research papers and extract their text and
+                    important sections automatically.
+                </p>
+
             </div>
-            <div class="feature-card"><i class="fa-solid fa-file-lines"></i>
-                <h3>Summary Generation</h3>
-                <p>Generate detailed summaries for each topic.</p>
+
+
+            <div class="feature-card">
+
+                <i class="fa-solid fa-file-lines"></i>
+
+                <h3>
+                    Summary Generation
+                </h3>
+
+                <p>
+                    Generate detailed AI-powered summaries for individual
+                    sections of research papers.
+                </p>
+
             </div>
-            <div class="feature-card"><i class="fa-solid fa-chart-simple"></i>
-                <h3>Topic Modeling</h3>
-                <p>Discover key topics and trends from papers.</p>
+
+
+            <div class="feature-card">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <h3>
+                    Intelligent Search
+                </h3>
+
+                <p>
+                    Ask questions about the uploaded research paper using
+                    retrieval-augmented generation.
+                </p>
+
             </div>
-            <div class="feature-card"><i class="fa-solid fa-key"></i>
-                <h3>Citation Extraction</h3>
-                <p>Organize references and citations quickly.</p>
+
+
+            <div class="feature-card">
+
+                <i class="fa-solid fa-clock-rotate-left"></i>
+
+                <h3>
+                    Previous Work
+                </h3>
+
+                <p>
+                    Save and revisit your previously analyzed research
+                    papers and generated summaries.
+                </p>
+
             </div>
+
         </div>
+
     </section>
 
-    <!-- UPLOAD -->
+
+    <!-- =========================
+         UPLOAD
+    ========================== -->
+
     <section id="uploadSection" class="upload-section">
-        <h2>Upload Your Research Paper</h2>
+
+        <h2>
+            Upload Your Research Paper
+        </h2>
+
+
         <div class="upload-card" id="uploadCard">
-            <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-            <p>Drag & Drop your PDF here<br>or click to browse</p>
-        </div>
-        <input type="file" id="pdfFile" accept=".pdf" style="display:none;">
 
-        <div class="progress-container" id="progressContainer" style="display:none;">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-
-        <!-- Topics Dropdown -->
-        <div id="topicSection" style="display:none;">
-            <label for="topicSelect" style="color:#fff;font-size:1.2em;">Select Topic:</label>
-            <select id="topicSelect"></select>
-            <button onclick="showTopicSummary()">Show Summary</button>
-        </div>
-
-        <!-- Summary -->
-        <div class="summary" id="summarySection" style="display:none;">
-            <h3>Summary</h3>
-            <p id="summaryContent"></p>
-        </div>
-
-        <!-- Chat -->
-        <div id="chatSection" style="display:none;">
-            <h3>Ask Questions About This Research Paper</h3>
-            <div id="chatBox" style="height: 500px;"></div>
-            <div style="margin-top:10px;">
-                <input type="text" id="chatInput" placeholder="Type your question...">
-                <button onclick="sendChat()">Send</button>
+            <div class="upload-icon">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
             </div>
+
+            <p>
+                Drag & Drop your PDF here
+                <br>
+                or click to browse
+            </p>
+
         </div>
+
+
+        <input
+            type="file"
+            id="pdfFile"
+            accept=".pdf,application/pdf"
+            style="display:none;"
+        >
+
+
+        <!-- Progress -->
+
+        <div
+            class="progress-container"
+            id="progressContainer"
+            style="display:none;"
+        >
+
+            <div
+                class="progress-bar"
+                id="progressBar"
+            ></div>
+
+        </div>
+
+
+        <!-- Status -->
+
+        <div
+            id="statusMessage"
+            class="status-message"
+        ></div>
+
+
+        <!-- =========================
+             TOPICS
+        ========================== -->
+
+        <div
+            id="topicSection"
+            style="display:none;"
+        >
+
+            <label for="topicSelect">
+                <i class="fa-solid fa-list"></i>
+                Select Topic:
+            </label>
+
+
+            <select id="topicSelect">
+            </select>
+
+
+            <button
+                class="summary-btn"
+                onclick="showTopicSummary()"
+            >
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                Show Summary
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             SUMMARY
+        ========================== -->
+
+        <div
+            class="summary"
+            id="summarySection"
+            style="display:none;"
+        >
+
+            <h3>
+                <i class="fa-solid fa-file-lines"></i>
+                Summary
+            </h3>
+
+            <div id="summaryContent"></div>
+
+        </div>
+
+
+        <!-- =========================
+             CHAT
+        ========================== -->
+
+        <div
+            id="chatSection"
+            style="display:none;"
+        >
+
+            <h3>
+                <i class="fa-solid fa-comments"></i>
+                Ask Questions About This Research Paper
+            </h3>
+
+
+            <div id="chatBox">
+            </div>
+
+
+            <div class="chat-input-container">
+
+                <input
+                    type="text"
+                    id="chatInput"
+                    placeholder="Ask something about the research paper..."
+                    autocomplete="off"
+                >
+
+
+                <button
+                    id="sendChatButton"
+                    onclick="sendChat()"
+                >
+
+                    <i class="fa-solid fa-paper-plane"></i>
+                    Send
+
+                </button>
+
+            </div>
+
+        </div>
+
     </section>
 
 
-    <!-- FOOTER -->
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
     <footer>
+
         &copy; 2026 ResearchPortal |
-        <a href="https://github.com/" target="_blank">GitHub</a> 
+
+        <a
+            href="https://github.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            GitHub
+        </a>
+
     </footer>
 
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
     <script>
-        // Demo topics for uploaded PDF
+
+        /* ==========================================
+           GLOBAL STATE
+        ========================================== */
+
         let topics = {};
-        const uploadCard = document.getElementById('uploadCard');
-        const fileInput = document.getElementById('pdfFile');
-        const progressContainer = document.getElementById('progressContainer');
-        const progressBar = document.getElementById('progressBar');
-        const topicSection = document.getElementById('topicSection');
-        const topicSelect = document.getElementById('topicSelect');
-        const summarySection = document.getElementById('summarySection');
-        const summaryContent = document.getElementById('summaryContent');
-        const chatSection = document.getElementById('chatSection');
-        const chatBox = document.getElementById('chatBox');
-        const chatInput = document.getElementById('chatInput');
 
-        uploadCard.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', handleFile);
 
-        uploadCard.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadCard.style.background = 'rgba(255,255,255,0.15)';
+        /* ==========================================
+           DOM ELEMENTS
+        ========================================== */
+
+        const uploadCard =
+            document.getElementById('uploadCard');
+
+        const fileInput =
+            document.getElementById('pdfFile');
+
+        const progressContainer =
+            document.getElementById('progressContainer');
+
+        const progressBar =
+            document.getElementById('progressBar');
+
+        const topicSection =
+            document.getElementById('topicSection');
+
+        const topicSelect =
+            document.getElementById('topicSelect');
+
+        const summarySection =
+            document.getElementById('summarySection');
+
+        const summaryContent =
+            document.getElementById('summaryContent');
+
+        const chatSection =
+            document.getElementById('chatSection');
+
+        const chatBox =
+            document.getElementById('chatBox');
+
+        const chatInput =
+            document.getElementById('chatInput');
+
+        const sendChatButton =
+            document.getElementById('sendChatButton');
+
+        const statusMessage =
+            document.getElementById('statusMessage');
+
+
+        /* ==========================================
+           SCROLL TO UPLOAD
+        ========================================== */
+
+        function scrollToUpload() {
+
+            document
+                .getElementById('uploadSection')
+                .scrollIntoView({
+                    behavior: 'smooth'
+                });
+
+        }
+
+
+        /* ==========================================
+           STATUS MESSAGE
+        ========================================== */
+
+        function showStatus(message, type) {
+
+            statusMessage.textContent = message;
+
+            statusMessage.className =
+                'status-message ' +
+                (type === 'error'
+                    ? 'status-error'
+                    : 'status-success');
+
+            statusMessage.style.display = 'block';
+
+        }
+
+
+        function hideStatus() {
+
+            statusMessage.style.display = 'none';
+
+        }
+
+
+        /* ==========================================
+           UPLOAD CARD CLICK
+        ========================================== */
+
+        uploadCard.addEventListener('click', function () {
+
+            fileInput.click();
+
         });
 
-        uploadCard.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            uploadCard.style.background = 'rgba(255,255,255,0.05)';
-        });
 
-        uploadCard.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadCard.style.background = 'rgba(255,255,255,0.05)';
-            fileInput.files = e.dataTransfer.files;
-            handleFile();  // ✅ only here for drag-drop
-        });
+        /* ==========================================
+           FILE INPUT
+        ========================================== */
+
+        fileInput.addEventListener(
+            'change',
+            function () {
+
+                handleFile();
+
+            }
+        );
+
+
+        /* ==========================================
+           DRAG OVER
+        ========================================== */
+
+        uploadCard.addEventListener(
+            'dragover',
+            function (event) {
+
+                event.preventDefault();
+
+                uploadCard.style.background =
+                    'rgba(255,255,255,0.15)';
+
+            }
+        );
+
+
+        /* ==========================================
+           DRAG LEAVE
+        ========================================== */
+
+        uploadCard.addEventListener(
+            'dragleave',
+            function (event) {
+
+                event.preventDefault();
+
+                uploadCard.style.background =
+                    'rgba(255,255,255,0.05)';
+
+            }
+        );
+
+
+        /* ==========================================
+           DROP
+        ========================================== */
+
+        uploadCard.addEventListener(
+            'drop',
+            function (event) {
+
+                event.preventDefault();
+
+                uploadCard.style.background =
+                    'rgba(255,255,255,0.05)';
+
+                const files =
+                    event.dataTransfer.files;
+
+                if (!files || files.length === 0) {
+                    return;
+                }
+
+                const file = files[0];
+
+                if (
+                    file.type !== 'application/pdf' &&
+                    !file.name.toLowerCase().endsWith('.pdf')
+                ) {
+
+                    showStatus(
+                        'Please upload a PDF file only.',
+                        'error'
+                    );
+
+                    return;
+                }
+
+                handleSelectedFile(file);
+
+            }
+        );
+
+
+        /* ==========================================
+           HANDLE FILE
+        ========================================== */
 
         function handleFile() {
-            const file = fileInput.files[0];
-            if(!file) return;
-            progressContainer.style.display = 'block';
-            progressBar.style.width = '0%';
-            topicSection.style.display = 'none';
-            summarySection.style.display = 'none';
-            chatSection.style.display = 'none';
+
+            const file =
+                fileInput.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            handleSelectedFile(file);
+
+        }
+
+
+        /* ==========================================
+           HANDLE SELECTED FILE
+        ========================================== */
+
+        function handleSelectedFile(file) {
+
+            if (
+                file.type !== 'application/pdf' &&
+                !file.name.toLowerCase().endsWith('.pdf')
+            ) {
+
+                showStatus(
+                    'Please upload a PDF file only.',
+                    'error'
+                );
+
+                return;
+            }
+
+
+            hideStatus();
+
+
+            progressContainer.style.display =
+                'block';
+
+            progressBar.style.width =
+                '0%';
+
+
+            topicSection.style.display =
+                'none';
+
+            summarySection.style.display =
+                'none';
+
+            chatSection.style.display =
+                'none';
+
+
+            topicSelect.innerHTML = '';
+
+            summaryContent.innerHTML = '';
+
+            chatBox.innerHTML = '';
+
+            topics = {};
+
+
+            /*
+             * Visual progress only.
+             *
+             * The actual processing is performed
+             * by Flask after the progress reaches 100%.
+             */
 
             let width = 0;
-            const interval = setInterval(() => {
-                if (width >= 100) {
-                    clearInterval(interval);
-                    // Demo topics and summaries
 
-                    // Send file to Flask backend
-                    const formData = new FormData();
-                    formData.append('file', file);
 
-                    fetch('/upload', { method: 'POST', body: formData })
-                        .then(res => res.json())
-                        .then(data => {
-                            topicSelect.innerHTML = '';
-                            data.topics.forEach(t => {
-                                let opt = document.createElement('option');
-                                opt.value = t;
-                                opt.innerText = t;
-                                topicSelect.appendChild(opt);
-                            });
-                            topicSection.style.display = 'block';
-                        });
+            const interval =
+                setInterval(function () {
 
-                } else {
-                    width += 10;
-                    progressBar.style.width = width + '%';
-                }
-            }, 200);
+                    if (width >= 90) {
+
+                        clearInterval(interval);
+
+                        uploadToServer(file);
+
+                    } else {
+
+                        width += 10;
+
+                        progressBar.style.width =
+                            width + '%';
+
+                    }
+
+                }, 100);
+
         }
+
+
+        /* ==========================================
+           UPLOAD TO FLASK
+        ========================================== */
+
+        async function uploadToServer(file) {
+
+            try {
+
+                showStatus(
+                    'Analyzing your research paper. Please wait...',
+                    'success'
+                );
+
+
+                const formData =
+                    new FormData();
+
+                formData.append(
+                    'file',
+                    file
+                );
+
+
+                const response =
+                    await fetch(
+                        '/upload',
+                        {
+                            method: 'POST',
+                            body: formData
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.error ||
+                        'Failed to upload the PDF.'
+                    );
+
+                }
+
+
+                if (
+                    !data.topics ||
+                    !Array.isArray(data.topics)
+                ) {
+
+                    throw new Error(
+                        'No sections were detected in the research paper.'
+                    );
+
+                }
+
+
+                /*
+                 * Important:
+                 * Store the returned topics.
+                 */
+
+                topics = {};
+
+                data.topics.forEach(function (topic) {
+
+                    topics[topic] = '';
+
+                });
+
+
+                topicSelect.innerHTML = '';
+
+
+                data.topics.forEach(
+                    function (topic) {
+
+                        const option =
+                            document.createElement('option');
+
+                        option.value =
+                            topic;
+
+                        option.textContent =
+                            topic;
+
+                        topicSelect.appendChild(
+                            option
+                        );
+
+                    }
+                );
+
+
+                progressBar.style.width =
+                    '100%';
+
+
+                topicSection.style.display =
+                    'block';
+
+
+                showStatus(
+                    'Research paper uploaded and analyzed successfully.',
+                    'success'
+                );
+
+
+                /*
+                 * Automatically show chat
+                 * after successful upload.
+                 */
+
+                chatSection.style.display =
+                    'block';
+
+
+                /*
+                 * Scroll toward topic section.
+                 */
+
+                setTimeout(function () {
+
+                    topicSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+
+                }, 300);
+
+
+            } catch (error) {
+
+                console.error(
+                    'Upload Error:',
+                    error
+                );
+
+
+                progressBar.style.width =
+                    '0%';
+
+
+                showStatus(
+                    error.message ||
+                    'Something went wrong while uploading the PDF.',
+                    'error'
+                );
+
+            }
+
+        }
+
+
+        /* ==========================================
+           FORMAT SUMMARY
+        ========================================== */
 
         function formatSummary(text) {
-            return text
-                .replace(/^### (.*$)/gim, '<h4>$1</h4>')
-                .replace(/^## (.*$)/gim, '<h3>$1</h3>')
-                .replace(/^# (.*$)/gim, '<h2>$1</h2>')
-                .replace(/^- (.*$)/gim, '<ul><li>$1</li></ul>')
-                .replace(/^\d+\. (.*$)/gim, '<ol><li>$1</li></ol>')
-                .replace(/\n\n/g, '<br><br>');
+
+            if (!text) {
+
+                return '<p>No summary available.</p>';
+
+            }
+
+
+            /*
+             * Escape HTML first so that AI-generated
+             * content cannot directly inject HTML.
+             */
+
+            const escaped =
+                text
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+
+
+            let formatted =
+                escaped;
+
+
+            formatted =
+                formatted.replace(
+                    /^### (.*$)/gim,
+                    '<h4>$1</h4>'
+                );
+
+
+            formatted =
+                formatted.replace(
+                    /^## (.*$)/gim,
+                    '<h3>$1</h3>'
+                );
+
+
+            formatted =
+                formatted.replace(
+                    /^# (.*$)/gim,
+                    '<h2>$1</h2>'
+                );
+
+
+            formatted =
+                formatted.replace(
+                    /^- (.*$)/gim,
+                    '<li>$1</li>'
+                );
+
+
+            formatted =
+                formatted.replace(
+                    /^(\d+)\. (.*$)/gim,
+                    '<li>$2</li>'
+                );
+
+
+            formatted =
+                formatted.replace(
+                    /(<li>.*<\/li>)/gim,
+                    '<ul>$1</ul>'
+                );
+
+
+            formatted =
+                formatted.replace(
+                    /\n\n/g,
+                    '<br><br>'
+                );
+
+
+            formatted =
+                formatted.replace(
+                    /\n/g,
+                    '<br>'
+                );
+
+
+            return formatted;
+
         }
 
-        function showTopicSummary() {
-            const selected = topicSelect.value;
-            const raw = topics[selected] || "No summary available.";
-            summaryContent.innerHTML = formatSummary(raw);
-            summarySection.style.display = 'block';
-            chatSection.style.display = 'block';
-            chatBox.innerHTML = '';
+
+        /* ==========================================
+           SHOW TOPIC SUMMARY
+        ========================================== */
+
+        async function showTopicSummary() {
+
+            const topic =
+                topicSelect.value;
+
+
+            if (!topic) {
+
+                showStatus(
+                    'Please select a topic first.',
+                    'error'
+                );
+
+                return;
+
+            }
+
+
+            summaryContent.innerHTML =
+                '<p><i class="fa-solid fa-spinner fa-spin"></i> Generating summary...</p>';
+
+            summarySection.style.display =
+                'block';
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        '/summary',
+                        {
+                            method: 'POST',
+
+                            headers: {
+                                'Content-Type':
+                                    'application/json'
+                            },
+
+                            body: JSON.stringify({
+                                topic: topic
+                            })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.error ||
+                        'Unable to generate summary.'
+                    );
+
+                }
+
+
+                const raw =
+                    data.summary ||
+                    'No summary available.';
+
+
+                summaryContent.innerHTML =
+                    formatSummary(raw);
+
+
+                chatSection.style.display =
+                    'block';
+
+
+                summarySection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+
+            } catch (error) {
+
+                console.error(
+                    'Summary Error:',
+                    error
+                );
+
+
+                summaryContent.innerHTML =
+                    '<p style="color:#c62828;">' +
+                    error.message +
+                    '</p>';
+
+            }
+
         }
-        
-        function showTopicSummary(){
-            const topic = topicSelect.value;
-            fetch('/summary', {
-              method:'POST',
-              headers:{'Content-Type':'application/json'},
-              body: JSON.stringify({topic})
-            })
-            .then(res=>res.json())
-            .then(data=>{
-              const raw = data.summary || "No summary available.";
-              summaryContent.innerHTML = formatSummary(raw);
-              summarySection.style.display = 'block';
-              chatSection.style.display = 'block';
-              chatBox.innerHTML = '';
-            });
-          }
 
-        function sendChat(){
-            const msg = chatInput.value.trim();
-            if(!msg) return;
-          
-            // User message
-            const userMsg = document.createElement('div');
-            userMsg.className = 'chat-message chat-user';
-            userMsg.innerHTML = `<i class="fa-solid fa-user">  </i>  ${msg}`;
-            chatBox.appendChild(userMsg);
 
-            chatBox.scrollTop = chatBox.scrollHeight;
-            chatInput.value = '';
-          
-            fetch('/chat', {
-              method:'POST',
-              headers:{'Content-Type':'application/json'},
-              body: JSON.stringify({message: msg})
-            })
-            .then(res=>res.json())
-            .then(data=>{
-                const aiMsg = document.createElement('div');
-                aiMsg.className = 'chat-message chat-ai';
-                aiMsg.innerHTML = `<i class="fa-solid fa-robot"></i> ${data.response}`;
-                chatBox.appendChild(aiMsg);
-              chatBox.scrollTop = chatBox.scrollHeight;
-              chatInput.value = '';
-            });
-          }
-          
+        /* ==========================================
+           ADD CHAT MESSAGE
+        ========================================== */
+
+        function addChatMessage(
+            message,
+            type
+        ) {
+
+            const messageDiv =
+                document.createElement('div');
+
+
+            messageDiv.className =
+                'chat-message ' +
+                (
+                    type === 'user'
+                        ? 'chat-user'
+                        : 'chat-ai'
+                );
+
+
+            const icon =
+                type === 'user'
+                    ? '<i class="fa-solid fa-user"></i>'
+                    : '<i class="fa-solid fa-robot"></i>';
+
+
+            /*
+             * Escape user/AI response text
+             * before inserting into HTML.
+             */
+
+            const safeMessage =
+                message
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;')
+                    .replace(/\n/g, '<br>');
+
+
+            messageDiv.innerHTML =
+                icon +
+                ' &nbsp; ' +
+                safeMessage;
+
+
+            chatBox.appendChild(
+                messageDiv
+            );
+
+
+            chatBox.scrollTop =
+                chatBox.scrollHeight;
+
+        }
+
+
+        /* ==========================================
+           SEND CHAT
+        ========================================== */
+
+        async function sendChat() {
+
+            const msg =
+                chatInput.value.trim();
+
+
+            if (!msg) {
+                return;
+            }
+
+
+            /*
+             * Display user message.
+             */
+
+            addChatMessage(
+                msg,
+                'user'
+            );
+
+
+            chatInput.value =
+                '';
+
+
+            sendChatButton.disabled =
+                true;
+
+
+            /*
+             * Temporary loading message.
+             */
+
+            const loadingMessage =
+                document.createElement('div');
+
+            loadingMessage.className =
+                'chat-message chat-ai chat-loading';
+
+            loadingMessage.innerHTML =
+                '<i class="fa-solid fa-robot"></i>' +
+                ' &nbsp; Thinking...';
+
+            chatBox.appendChild(
+                loadingMessage
+            );
+
+            chatBox.scrollTop =
+                chatBox.scrollHeight;
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        '/chat',
+                        {
+                            method: 'POST',
+
+                            headers: {
+                                'Content-Type':
+                                    'application/json'
+                            },
+
+                            body: JSON.stringify({
+                                message: msg
+                            })
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                /*
+                 * Remove loading message.
+                 */
+
+                loadingMessage.remove();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.error ||
+                        'Unable to get a response.'
+                    );
+
+                }
+
+
+                const aiResponse =
+                    data.response ||
+                    "I don't know.";
+
+
+                addChatMessage(
+                    aiResponse,
+                    'ai'
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    'Chat Error:',
+                    error
+                );
+
+
+                loadingMessage.remove();
+
+
+                addChatMessage(
+                    'Error: ' +
+                    error.message,
+                    'ai'
+                );
+
+            } finally {
+
+                sendChatButton.disabled =
+                    false;
+
+                chatInput.focus();
+
+            }
+
+        }
+
+
+        /* ==========================================
+           ENTER KEY FOR CHAT
+        ========================================== */
+
+        chatInput.addEventListener(
+            'keydown',
+            function (event) {
+
+                if (
+                    event.key === 'Enter' &&
+                    !event.shiftKey
+                ) {
+
+                    event.preventDefault();
+
+                    sendChat();
+
+                }
+
+            }
+        );
+
+
     </script>
 
 </body>

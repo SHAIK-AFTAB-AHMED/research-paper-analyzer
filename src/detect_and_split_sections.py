@@ -1,78 +1,212 @@
 import json
 from typing import List, Dict
 
-def refine_sections(input_list: str, llm) -> List[Dict]:
+
+def refine_sections(input_list: List[Dict], llm) -> List[Dict]:
+    """
+    Refine the sections detected from a research paper using an LLM.
+
+    Removes:
+    - Figure captions
+    - Table captions
+    - Incomplete fragments
+    - Irrelevant section entries
+
+    Returns a clean list of section dictionaries.
+    """
+
+    # Convert Python list into proper JSON
+    input_json = json.dumps(
+        input_list,
+        ensure_ascii=False,
+        indent=2
+    )
+
     prompt = f"""
 You are a precise data processor.
 
-I will give you a JSON list of sections from a research paper. Each item may have:
+I will give you a JSON list of sections from a research paper.
+
+Each item may contain:
 - "section" (string)
 - optional "subsection" (string)
 - "start" (integer)
 
-Some entries are unnecessary and must be **removed completely**:
-1. Figure or Table captions (any "section" starting with "Figure" or "Table").
-2. Incomplete, meaningless, or fragment sections (e.g., "making", "length nis smaller...").
-3. Any other irrelevant entries that are not proper sections or subsections.
+Your task is to refine this list.
 
-Your task is to **refine this list**:
+Remove completely:
 
-- Keep only meaningful main sections and their subsections.
-- Main sections should be in the format: 
-  {{"section": "Section Name", "start": number}}
-- Subsections should be in the format: 
-  {{"section": "Parent Section", "subsection": "Subsection Name", "start": number}}
-- The output must be **strictly a JSON array of dictionaries**.
-- Do **not** include any explanations, notes, extra text, or commentary.
-- If a section is unnecessary (e.g., figure, table, fragment), **exclude it completely**.
+1. Figure or Table captions.
+   Any section beginning with "Figure" or "Table".
 
-Here is the input JSON:
+2. Incomplete, meaningless, or fragment sections.
+   Examples:
+   - "making"
+   - "length is smaller"
+   - incomplete sentences
+   - random fragments
 
-{input_list}
+3. Any irrelevant entries that are not proper research-paper sections
+   or subsections.
 
-Always return list of dictionaries only, no preamble.
+Keep only meaningful main sections and subsections.
+
+Main section format:
+
+{{
+    "section": "Section Name",
+    "start": number
+}}
+
+Subsection format:
+
+{{
+    "section": "Parent Section",
+    "subsection": "Subsection Name",
+    "start": number
+}}
+
+Important requirements:
+
+- Return ONLY a valid JSON array.
+- Do not include Markdown.
+- Do not use ```json.
+- Do not include explanations.
+- Do not include comments.
+- Do not include a preamble.
+- Do not add information that is not present in the input.
+- Preserve the original start positions.
+- Return an empty JSON array [] if no valid sections remain.
+
+Input JSON:
+
+{input_json}
+
+Return only the JSON array.
 """
 
-    # Call the LLM — returns a string
     try:
-        assistant_text = llm.invoke(prompt).content.strip()
-        # print(assistant_text)
-        # print("Raw LLM Output:\n", assistant_text)
+        response = llm.invoke(prompt)
 
-        # Parse JSON and return
+        # Extract text from LangChain response
+        if hasattr(response, "content"):
+            assistant_text = response.content.strip()
+        else:
+            assistant_text = str(response).strip()
+
+        # Remove accidental Markdown code fences
+        if assistant_text.startswith("```"):
+            lines = assistant_text.splitlines()
+
+            if lines and lines[0].strip().startswith("```"):
+                lines = lines[1:]
+
+            if lines and lines[-1].strip() == "```":
+                lines = lines[:-1]
+
+            assistant_text = "\n".join(lines).strip()
+
+        # Parse JSON
         sections = json.loads(assistant_text)
-    except (json.JSONDecodeError, KeyError, TypeError) as e:
-        print("Warning: LLM output not valid JSON. Returning empty list.")
-        print("Error:", e)
-        sections = []
 
-    return sections
+        # Make sure the LLM actually returned a list
+        if not isinstance(sections, list):
+            print("Warning: LLM returned something other than a JSON list.")
+            return []
+
+        return sections
+
+    except json.JSONDecodeError as error:
+        print("Warning: LLM output was not valid JSON.")
+        print("JSON error:", error)
+        print("Raw LLM output:", assistant_text if "assistant_text" in locals() else "No output")
+        return []
+
+    except Exception as error:
+        print("Error while refining sections:", error)
+        return []
 
 
-def split_sections_with_content(text: str, detected_sections: List[Dict]) -> List[Dict]:
+def split_sections_with_content(
+    text: str,
+    detected_sections: List[Dict]
+) -> Dict[str, str]:
     """
-    Split text into sections/subsections using detected start positions.
-    Returns a list of dicts with: section, subsection (if any), start, content.
+    Split research paper text into sections/subsections using
+    detected start positions.
+
+    Returns a dictionary:
+
+    {
+        "Introduction": "...",
+        "3.1 Methodology": "...",
+        "Results": "..."
+    }
     """
+
+    if not text or not text.strip():
+        return {"Full_Paper": ""}
+
     if not detected_sections:
-        return {"Full_Paper" : text}
+        return {"Full_Paper": text}
 
-    # Sort by start index to ensure correct order
-    detected_sections = sorted(detected_sections, key=lambda x: x["start"])
+    # Keep only valid section entries
+    valid_sections = []
+
+    for section in detected_sections:
+        if not isinstance(section, dict):
+            continue
+
+        if "start" not in section:
+            continue
+
+        if "section" not in section:
+            continue
+
+        try:
+            section["start"] = int(section["start"])
+        except (TypeError, ValueError):
+            continue
+
+        valid_sections.append(section)
+
+    if not valid_sections:
+        return {"Full_Paper": text}
+
+    # Sort according to starting position
+    valid_sections = sorted(
+        valid_sections,
+        key=lambda x: x["start"]
+    )
+
     results = {}
 
-    for i, sec in enumerate(detected_sections):
-        start = sec["start"]
-        end = detected_sections[i + 1]["start"] if i + 1 < len(detected_sections) else len(text)
+    for i, section in enumerate(valid_sections):
 
-        # Section details
-        section_name = sec["section"]
-        subsection_name = sec.get("subsection", None)
+        start = section["start"]
+
+        if i + 1 < len(valid_sections):
+            end = valid_sections[i + 1]["start"]
+        else:
+            end = len(text)
+
+        # Protect against invalid positions
+        start = max(0, min(start, len(text)))
+        end = max(start, min(end, len(text)))
+
         section_text = text[start:end].strip()
 
-        results[section_name] = section_text
+        section_name = str(section["section"]).strip()
+
+        subsection_name = section.get("subsection")
 
         if subsection_name:
-            results[subsection_name] = results.pop(section_name)
+            subsection_name = str(subsection_name).strip()
+
+            if subsection_name:
+                results[subsection_name] = section_text
+        else:
+            if section_name:
+                results[section_name] = section_text
 
     return results
