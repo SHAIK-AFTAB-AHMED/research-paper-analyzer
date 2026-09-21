@@ -4,21 +4,11 @@ python-dotenv==1.1.1
 
 PyPDF2==3.0.1
 
-langchain==0.3.27
-langchain-community==0.3.30
 langchain-core==0.3.76
 langchain-groq==0.3.8
-langchain-huggingface==0.3.1
-langchain-text-splitters==0.3.11
-
-faiss-cpu==1.10.0
 
 numpy==1.26.4
 scipy==1.13.1
 scikit-learn==1.6.1
-
-sentence-transformers==5.1.1
-torch==2.2.2
-transformers==4.56.2
 
 gunicorn==23.0.0
